@@ -3,6 +3,8 @@
   let cols = 28;
   let leftMouseButtonOnlyDown = false;
 
+  const baseURL = "https://shnpln252.pythonanywhere.com/digits";
+
   const gameBoard = [];
 
   const gameBoard_UI = document.getElementById("gameBoard_UI");
@@ -20,9 +22,17 @@
       if (this.greyScaleValue > 1) {
         this.greyScaleValue = 1;
       }
-      let color = "rgb(30, 201, 201," + this.greyScaleValue + ")";
-      // getCellElem(this.x, this.y).style.opacity = this.greyScaleValue;
+      this.setBackGround();
+    }
+
+    setBackGround() {
+      let color = "rgb(30, 30, 30," + this.greyScaleValue + ")";
       getCellElem(this.x, this.y).style.backgroundColor = color;
+    }
+
+    resetBackGround() {
+      getCellElem(this.x, this.y).style.backgroundColor =
+        "rgb(201, 201, 201, 0.4)";
     }
 
     setNeighbors() {
@@ -62,27 +72,185 @@
   }
 
   function start() {
+    for (let i = 0; i < 14; i++) {
+      shiftValueHor();
+    }
+    for (let i = 0; i < 14; i++) {
+      shiftValueVer();
+    }
+    const values = [];
     for (let x = 0; x < cols; x++) {
       for (let y = 0; y < rows; y++) {
-        console.log(gameBoard[x][y].greyScaleValue);
+        values.push([gameBoard[y][x].greyScaleValue]);
       }
     }
+    const url = baseURL + "?digits=" + JSON.stringify(values);
+
+    fetch(url, { method: "get", mode: "cors" })
+      .then((r) => r.text())
+      .then(showGuess);
+  }
+
+  function shiftValueVer() {
+    let topDistance, botDistance;
+    let topFound = false;
+    let botFound = false;
+    for (let x = 0; x < cols; x++) {
+      for (let y = 0; y < rows; y++) {
+        if (gameBoard[y][x].greyScaleValue > 0) {
+          topDistance = x;
+          topFound = true;
+          break;
+        }
+      }
+      if (topFound) {
+        break;
+      }
+    }
+    for (let x = cols - 1; x >= 0; x--) {
+      for (let y = rows - 1; y >= 0; y--) {
+        if (gameBoard[y][x].greyScaleValue > 0) {
+          botDistance = rows - x;
+          botFound = true;
+          break;
+        }
+      }
+      if (botFound) {
+        break;
+      }
+    }
+
+    if (topDistance === botDistance) {
+      return;
+    }
+    if (topDistance > botDistance) {
+      movey(-1);
+    }
+    if (topDistance < botDistance) {
+      movey(1);
+    }
+  }
+
+  function shiftValueHor() {
+    let leftDistance, rightDistance;
+    for (let x = 0; x < cols; x++) {
+      if (gameBoard[x].some((cell) => cell.greyScaleValue > 0)) {
+        leftDistance = x;
+        break;
+      }
+    }
+    for (let x = cols - 1; x >= 0; x--) {
+      if (gameBoard[x].some((cell) => cell.greyScaleValue > 0)) {
+        rightDistance = cols - x;
+        break;
+      }
+    }
+    if (leftDistance === rightDistance) {
+      return;
+    }
+    if (leftDistance > rightDistance) {
+      movex(-1);
+    }
+    if (leftDistance < rightDistance) {
+      movex(1);
+    }
+  }
+
+  function getLitCells() {
+    let litCells = [];
+    for (let x = 0; x < cols; x++) {
+      for (let y = 0; y < rows; y++) {
+        if (gameBoard[x][y].greyScaleValue > 0) {
+          litCells.push(gameBoard[x][y]);
+        }
+      }
+    }
+    return litCells;
+  }
+
+  function movex(dirx) {
+    const litCells = getLitCells();
+    const len = litCells.length;
+    if (dirx === -1) {
+      litCells.forEach((cell) => {
+        if (validPosition(cell.x + dirx, cell.y)) {
+          gameBoard[cell.x + dirx][cell.y].greyScaleValue = cell.greyScaleValue;
+          gameBoard[cell.x + dirx][cell.y].setBackGround();
+        }
+        cell.greyScaleValue = 0;
+        cell.resetBackGround();
+      });
+    } else {
+      litCells
+        .slice()
+        .reverse()
+        .forEach((cell) => {
+          if (validPosition(cell.x + dirx, cell.y)) {
+            gameBoard[cell.x + dirx][cell.y].greyScaleValue =
+              cell.greyScaleValue;
+            gameBoard[cell.x + dirx][cell.y].setBackGround();
+          }
+          cell.greyScaleValue = 0;
+          cell.resetBackGround();
+        });
+    }
+  }
+
+  function movey(diry) {
+    const litCells = getLitCells();
+    const len = litCells.length;
+    if (diry === -1) {
+      litCells.forEach((cell) => {
+        if (validPosition(cell.x, cell.y + diry)) {
+          gameBoard[cell.x][cell.y + diry].greyScaleValue = cell.greyScaleValue;
+          gameBoard[cell.x][cell.y + diry].setBackGround();
+        }
+        cell.greyScaleValue = 0;
+        cell.resetBackGround();
+      });
+    } else {
+      litCells
+        .slice()
+        .reverse()
+        .forEach((cell) => {
+          if (validPosition(cell.x, cell.y + diry)) {
+            gameBoard[cell.x][cell.y + diry].greyScaleValue =
+              cell.greyScaleValue;
+            gameBoard[cell.x][cell.y + diry].setBackGround();
+          }
+          cell.greyScaleValue = 0;
+          cell.resetBackGround();
+        });
+    }
+  }
+
+  function showGuess(g) {
+    document.getElementById("guess").textContent = g;
   }
 
   function onMouseOver(e) {
     if (leftMouseButtonOnlyDown) {
       let [x, y] = getXYFromCell(e.target);
-      gameBoard[x][y].increaseGreyScale(0.95);
-      gameBoard[x][y].neighbors.forEach((n) =>
-        gameBoard[n[0]][n[1]].increaseGreyScale(0.2)
-      );
+      gameBoard[x][y].increaseGreyScale(1);
+      gameBoard[x][y].neighbors.forEach((n) => {
+        gameBoard[n[0]][n[1]].increaseGreyScale(0.7);
+      });
     }
   }
 
-  function buildGridInternal() {}
+  function clear() {
+    for (let x = 0; x < cols; x++) {
+      for (let y = 0; y < rows; y++) {
+        gameBoard[y][x].greyScaleValue = 0;
+        getCellElem(x, y).style.backgroundColor = "rgb(201, 201, 201, 0.4)";
+      }
+    }
+  }
 
   (function () {
     document.getElementById("start").addEventListener("click", start);
+    document.getElementById("clear").addEventListener("click", clear);
+
     document.body.onmousedown = setLeftButtonState;
     document.body.onmousemove = setLeftButtonState;
     document.body.onmouseup = setLeftButtonState;
@@ -93,6 +261,10 @@
       col.id = "col-" + x;
       col.classList.add("col");
       gameBoard_UI.appendChild(col);
+      col.draggable = false;
+      col.ondragstart = function () {
+        return false;
+      };
       for (let y = 0; y < rows; y++) {
         const newCell = new Cell(x, y);
         gameBoard[x].push(newCell);

@@ -17,6 +17,10 @@ header {
   margin: 10px;
 }
 
+#guess {
+  font-size: xx-large;
+}
+
 menu {
   display: flex;
   flex-direction: row;
