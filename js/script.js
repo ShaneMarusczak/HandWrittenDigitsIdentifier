@@ -239,6 +239,7 @@
   }
 
   function clear() {
+    showGuess("");
     for (let x = 0; x < cols; x++) {
       for (let y = 0; y < rows; y++) {
         gameBoard[y][x].greyScaleValue = 0;
