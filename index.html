@@ -11,6 +11,10 @@
   <body>
     <header id="header-tag">
       <h1>Hand Writing</h1>
+      <p>
+        Identifies hand written digits from 0 to 9 using a Neural Network
+        trained on the MNIST Database
+      </p>
       <p id="lastUpdatedText" title="9:20 AM">Last Updated: August 26, 2021</p>
     </header>
     <menu>
@@ -23,6 +27,12 @@
     </menu>
     <div class="gameBoardWrapper">
       <div id="gameBoard_UI" class="shadowBox"></div>
+    </div>
+    <div id="loadingAnimation" class="animation hidden">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
     <p id="guess"></p>
   </body>

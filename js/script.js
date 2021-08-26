@@ -72,6 +72,7 @@
   }
 
   function start() {
+    document.getElementById("loadingAnimation").classList.remove("hidden");
     for (let i = 0; i < 14; i++) {
       shiftValueHor();
     }
@@ -225,6 +226,7 @@
   }
 
   function showGuess(g) {
+    document.getElementById("loadingAnimation").classList.add("hidden");
     document.getElementById("guess").textContent = g;
   }
 
