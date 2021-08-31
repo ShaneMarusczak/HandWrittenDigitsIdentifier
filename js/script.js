@@ -242,8 +242,6 @@
         secondHighest[1] = i;
       }
     });
-    console.log(max);
-    console.log(secondHighest);
     document.getElementById("loadingAnimation").classList.add("hidden");
     if (max[0] * 100 < 70) {
       document.getElementById("guess").textContent = "";
