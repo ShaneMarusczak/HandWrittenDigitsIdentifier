@@ -5,6 +5,8 @@
 
   const baseURL = "https://shnpln252.pythonanywhere.com/digits";
 
+  // const baseURL = "http://127.0.0.1:5000/digits";
+
   const gameBoard = [];
 
   const gameBoard_UI = document.getElementById("gameBoard_UI");
@@ -88,7 +90,7 @@
     const url = baseURL + "?digits=" + JSON.stringify(values);
 
     fetch(url, { method: "get", mode: "cors" })
-      .then((r) => r.text())
+      .then((r) => r.json())
       .then(showGuess);
   }
 
@@ -226,8 +228,42 @@
   }
 
   function showGuess(g) {
+    let max = [0, 0];
+    g.forEach((item, i) => {
+      if (item > max[0]) {
+        max[0] = item;
+        max[1] = i;
+      }
+    });
+    let secondHighest = [0, 0];
+    g.forEach((item, i) => {
+      if (item > secondHighest[0] && item !== max[0]) {
+        secondHighest[0] = item;
+        secondHighest[1] = i;
+      }
+    });
+    console.log(max);
+    console.log(secondHighest);
     document.getElementById("loadingAnimation").classList.add("hidden");
-    document.getElementById("guess").textContent = g;
+    if (max[0] * 100 < 70) {
+      document.getElementById("guess").textContent = "";
+      document.getElementById("guessConfidence").textContent =
+        "Confidence to low to guess";
+    } else {
+      if (max[0] * 100 > 90) {
+        document.getElementById("guess").textContent = max[1];
+        document.getElementById("guessConfidence").textContent =
+          "High Confidence";
+      } else {
+        document.getElementById("guess").textContent = max[1];
+        document.getElementById("guessConfidence").textContent =
+          "Low Confidence";
+      }
+      if (secondHighest[0] * 100 > 50) {
+        document.getElementById("guess").textContent =
+          max[1] + " or " + secondHighest[1];
+      }
+    }
   }
 
   function onMouseOver(e) {
@@ -241,7 +277,8 @@
   }
 
   function clear() {
-    showGuess("");
+    document.getElementById("guess").textContent = "";
+    document.getElementById("guessConfidence").textContent = "";
     for (let x = 0; x < cols; x++) {
       for (let y = 0; y < rows; y++) {
         gameBoard[y][x].greyScaleValue = 0;
