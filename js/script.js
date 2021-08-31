@@ -246,7 +246,7 @@
     if (max[0] * 100 < 70) {
       document.getElementById("guess").textContent = "";
       document.getElementById("guessConfidence").textContent =
-        "Confidence to low to guess";
+        "Confidence too low to guess";
     } else {
       if (max[0] * 100 > 90) {
         document.getElementById("guess").textContent = max[1];
