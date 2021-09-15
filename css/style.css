@@ -46,14 +46,13 @@ p {
 }
 
 .cell {
-  height: 17px;
-  width: 17px;
-  border: 1px dimgrey solid;
-  background-color: rgb(201, 201, 201, 0.4);
+  height: 14px;
+  width: 14px;
+  background-color: white;
 }
 
 .cell:hover {
-  background-color: dimgrey;
+  cursor: crosshair;
 }
 
 .alive {
@@ -88,9 +87,7 @@ button {
   display: inline-block;
   position: relative;
   width: 80px;
-  /* height: 80px; */
   border: none !important;
-  /* left: 55px; */
 }
 
 .animation div {

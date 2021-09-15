@@ -33,8 +33,7 @@
     }
 
     resetBackGround() {
-      getCellElem(this.x, this.y).style.backgroundColor =
-        "rgb(201, 201, 201, 0.4)";
+      getCellElem(this.x, this.y).style.backgroundColor = "white";
     }
 
     setNeighbors() {
@@ -280,7 +279,7 @@
     for (let x = 0; x < cols; x++) {
       for (let y = 0; y < rows; y++) {
         gameBoard[y][x].greyScaleValue = 0;
-        getCellElem(x, y).style.backgroundColor = "rgb(201, 201, 201, 0.4)";
+        getCellElem(x, y).style.backgroundColor = "white";
       }
     }
   }
