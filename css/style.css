@@ -30,8 +30,13 @@ menu {
   width: max-content;
   min-height: 50px;
 }
+
 h1 {
   margin: 10px;
+}
+
+#info {
+  max-width: 500px;
 }
 
 p {
@@ -45,14 +50,14 @@ p {
   align-items: center;
 }
 
+#gameBoard_UI:hover {
+  cursor: crosshair;
+}
+
 .cell {
   height: 14px;
   width: 14px;
   background-color: white;
-}
-
-.cell:hover {
-  cursor: crosshair;
 }
 
 .alive {
