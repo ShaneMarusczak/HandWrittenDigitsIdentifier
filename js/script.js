@@ -250,11 +250,11 @@
       if (max[0] * 100 > 90) {
         document.getElementById("guess").textContent = max[1];
         document.getElementById("guessConfidence").textContent =
-          "High Confidence";
+          "High Confidence (>90%)";
       } else {
         document.getElementById("guess").textContent = max[1];
         document.getElementById("guessConfidence").textContent =
-          "Low Confidence";
+          "Low Confidence (70-90%)";
       }
       if (secondHighest[0] * 100 > 50) {
         document.getElementById("guess").textContent =
