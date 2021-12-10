@@ -28,8 +28,7 @@
     }
 
     setBackGround() {
-      let color = "rgb(30, 30, 30," + this.greyScaleValue + ")";
-      getCellElem(this.x, this.y).style.backgroundColor = color;
+      getCellElem(this.x, this.y).style.backgroundColor = "rgb(30, 30, 30," + this.greyScaleValue + ")";
     }
 
     resetBackGround() {
@@ -94,7 +93,7 @@
   }
 
   function shiftValueVer() {
-    let topDistance, botDistance;
+    let topDistance = 0, botDistance = 0;
     let topFound = false;
     let botFound = false;
     for (let x = 0; x < cols; x++) {
@@ -172,7 +171,6 @@
 
   function movex(dirx) {
     const litCells = getLitCells();
-    const len = litCells.length;
     if (dirx === -1) {
       litCells.forEach((cell) => {
         if (validPosition(cell.x + dirx, cell.y)) {
@@ -200,7 +198,6 @@
 
   function movey(diry) {
     const litCells = getLitCells();
-    const len = litCells.length;
     if (diry === -1) {
       litCells.forEach((cell) => {
         if (validPosition(cell.x, cell.y + diry)) {
