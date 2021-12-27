@@ -245,11 +245,11 @@
         "Confidence too low to guess";
     } else {
       if (max[0] * 100 > 90) {
-        document.getElementById("guess").textContent = max[1];
+        document.getElementById("guess").textContent = max[1].toString();
         document.getElementById("guessConfidence").textContent =
           "High Confidence (>90%)";
       } else {
-        document.getElementById("guess").textContent = max[1];
+        document.getElementById("guess").textContent = max[1].toString();
         document.getElementById("guessConfidence").textContent =
           "Low Confidence (70-90%)";
       }
@@ -288,6 +288,10 @@
     document.body.onmousedown = setLeftButtonState;
     document.body.onmousemove = setLeftButtonState;
     document.body.onmouseup = setLeftButtonState;
+    gameBoard_UI.draggable = false;
+    gameBoard_UI.ondragstart = function () {
+      return false;
+    };
 
     for (let x = 0; x < cols; x++) {
       gameBoard.push([]);
@@ -308,6 +312,10 @@
         cell.classList.add("cell");
         col.appendChild(cell);
         cell.addEventListener("mouseover", onMouseOver);
+        cell.draggable = false;
+        cell.ondragstart = function () {
+          return false;
+        };
       }
     }
   })();
