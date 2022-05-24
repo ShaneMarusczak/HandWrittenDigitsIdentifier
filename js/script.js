@@ -72,6 +72,7 @@
   }
 
   function start() {
+    clearSelection();
     document.getElementById("loadingAnimation").classList.remove("hidden");
     for (let i = 0; i < 14; i++) {
       shiftValueHor();
@@ -271,6 +272,7 @@
   }
 
   function clear() {
+    clearSelection();
     document.getElementById("guess").textContent = "";
     document.getElementById("guessConfidence").textContent = "";
     for (let x = 0; x < cols; x++) {
@@ -278,6 +280,14 @@
         gameBoard[y][x].greyScaleValue = 0;
         getCellElem(x, y).style.backgroundColor = "white";
       }
+    }
+  }
+
+  function clearSelection() {
+    if(window.getSelection) {
+      window.getSelection().removeAllRanges();
+    } else if(document.selection) {
+      document.selection.empty();
     }
   }
 
