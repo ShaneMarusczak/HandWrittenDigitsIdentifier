@@ -1,58 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
     <link rel="manifest" href="site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-            href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@500&display=swap"
-            rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@500&display=swap"
+        rel="stylesheet" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=800" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="css/style.min.css" />
-    <script src="js/script.min.js" defer></script>
+    <script src="js/min/script.min.js" defer></script>
     <title>Hand Writing Identifier</title>
-  </head>
-  <body>
+</head>
+
+<body>
     <header id="header-tag">
-      <h1>Hand Writing Identifier</h1>
-      <p id="info">
-        Identifies handwritten digits from 0 to 9 using Neural Networks
-        trained on the MNIST Database
-      </p>
-      <p id="lastUpdatedText" title="3:01 PM">
-        Last Updated: May 24, 2022
-      </p>
-      <a
-        id="homeLink"
-        href="https://marusczak.com/Games-Home-Page"
-        rel="noreferrer"
-        ><img id="homeIcon" src="house-icon.png" alt="home"
-      /></a>
+        <h1>Hand Writing Identifier</h1>
+        <p id="info">
+            Identifies handwritten digits from 0 to 9 using Neural Networks
+            trained on the MNIST Database
+        </p>
+        <p id="lastUpdatedText" title="10:33 AM">
+            Last Updated: December 9, 2023
+        </p>
+        <a id="homeLink" href="https://marusczak.com/Games-Home-Page" rel="noreferrer"><img id="homeIcon"
+                src="house-icon.png" alt="home" /></a>
     </header>
     <div id="menu">
-      <button type="button" name="start" id="start">
-        Evaluate
-      </button>
-      <button type="button" name="clear" id="clear">
-        Clear
-      </button>
+        <button type="button" name="start" id="start">Evaluate</button>
+        <button type="button" name="clear" id="clear">Clear</button>
     </div>
     <div class="gameBoardWrapper">
-      <div id="gameBoard_UI" class="shadowBox" ></div>
+        <div id="gameBoard_UI" class="shadowBox"></div>
     </div>
     <div id="loadingAnimation" class="animation hidden">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
     </div>
     <p id="guess"></p>
     <p id="guessConfidence"></p>
-  </body>
+</body>
+
 </html>

@@ -5,8 +5,6 @@
 
   const baseURL = "https://shnpln252.pythonanywhere.com/digits";
 
-  // const baseURL = "http://127.0.0.1:5000/digits";
-
   const gameBoard = [];
 
   const gameBoard_UI = document.getElementById("gameBoard_UI");
@@ -28,7 +26,8 @@
     }
 
     setBackGround() {
-      getCellElem(this.x, this.y).style.backgroundColor = "rgb(30, 30, 30," + this.greyScaleValue + ")";
+      getCellElem(this.x, this.y).style.backgroundColor =
+        "rgb(30, 30, 30," + this.greyScaleValue + ")";
     }
 
     resetBackGround() {
@@ -48,6 +47,20 @@
         }
       }
     }
+  }
+
+  function wakeUpServer() {
+    const values = [];
+    for (let x = 0; x < cols; x++) {
+      for (let y = 0; y < rows; y++) {
+        values.push([0]);
+      }
+    }
+    const url = baseURL + "?digits=" + JSON.stringify(values);
+
+    fetch(url, { method: "get", mode: "cors" })
+      .then((r) => r.json())
+      .then(console.log("server is awake"));
   }
 
   function setLeftButtonState(e) {
@@ -94,7 +107,8 @@
   }
 
   function shiftValueVer() {
-    let topDistance = 0, botDistance = 0;
+    let topDistance = 0,
+      botDistance = 0;
     let topFound = false;
     let botFound = false;
     for (let x = 0; x < cols; x++) {
@@ -275,6 +289,7 @@
     clearSelection();
     document.getElementById("guess").textContent = "";
     document.getElementById("guessConfidence").textContent = "";
+    document.getElementById("loadingAnimation").classList.add("hidden");
     for (let x = 0; x < cols; x++) {
       for (let y = 0; y < rows; y++) {
         gameBoard[y][x].greyScaleValue = 0;
@@ -284,9 +299,9 @@
   }
 
   function clearSelection() {
-    if(window.getSelection) {
+    if (window.getSelection) {
       window.getSelection().removeAllRanges();
-    } else if(document.selection) {
+    } else if (document.selection) {
       document.selection.empty();
     }
   }
@@ -298,6 +313,7 @@
     document.body.onmousedown = setLeftButtonState;
     document.body.onmousemove = setLeftButtonState;
     document.body.onmouseup = setLeftButtonState;
+    document.body.onload = wakeUpServer;
     gameBoard_UI.draggable = false;
     gameBoard_UI.ondragstart = function () {
       return false;
