@@ -60,7 +60,7 @@
 
     fetch(url, { method: "get", mode: "cors" })
       .then((r) => r.json())
-      .then(console.log("server is awake"));
+      .then(() => console.log("server is awake"));
   }
 
   function setLeftButtonState(e) {
